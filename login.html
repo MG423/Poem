@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Written</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: #f3f0e8;
+            background: linear-gradient(rgba(12, 10, 10, 0.55), rgba(12, 10, 10, 0.55)),
+                        url('1000147719.jpg') center/cover no-repeat;
+            background-attachment: fixed;
+        }
+        h1, p {
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
+        }
+        form {
+            background-color: rgba(255, 255, 255, 0);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+            display: inline-block;
+            max-width: 540px;
+            width: 100%;
+            margin-top: 24px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 90%;
+            max-width: 360px;
+            padding: 12px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.92);
+        }
+        input[type="submit"] {
+            background-color: #161616;
+            color: #fff;
+            padding: 12px 26px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to "The Written"</h1>
+    <p>A place where words come alive. Explore my collection of poems, stories, and essays that capture the essence of human experience. Whether you're seeking inspiration, reflection, or simply a moment of escape, you'll find it here. Dive into the world of literature and let your imagination soar.</p>
+    <form id="loginForm" action="index.html" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <input type="submit" value="Login">
+    </form>
+    <script>
+        const authKey = 'poemLoggedIn';
+
+        function redirectToHome() {
+            window.location.replace('index.html');
+        }
+
+        function ensureLoggedOut() {
+            if (sessionStorage.getItem(authKey) === 'true') {
+                redirectToHome();
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!username || !password) {
+                alert('Please enter both username and password.');
+                return;
+            }
+
+            sessionStorage.setItem(authKey, 'true');
+            sessionStorage.setItem('poemUser', username);
+            redirectToHome();
+        }
+
+        window.addEventListener('load', () => {
+            ensureLoggedOut();
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        });
+    </script>
+</body>
+</html>
